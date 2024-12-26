@@ -4,79 +4,41 @@ Showcase of my way to track blocking and deadlock sessions occurrence history wi
 <hr>
     </ul>
     <p dir="auto">
-        <a href="#about-this-sample">About this sample</a><br>
-        <a href="#before-you-begin">Before you begin</a><br>
-        <a href="#run-this-sample">Running the sample</a><br>
-        <a href="#sample-details">Sample details</a><br>
-        <a href="#disclaimers">Disclaimers</a><br>
-        <a href="#related-links">Related links</a><br>
+        <a href="#about">About</a><br>
+        <a href="#blocking-event">Blocking Event</a><br>
+        <a href="#deadlock-event">Deadlock Event</a><br>
+        <a href="#create-views">Create Views</a><br>
+        <a href="#conclusion">Conclusion</a><br>
     </p>
-    ...............
-    ......
-    .
-    .
-    .
-    .jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-    jhhhhhhhhhhhhhhhhh
-    hhhhhhhhhhhhhhhhh
-    u
-    uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
-    zuuuuuuuuuuu
-    .
-    .
-    .
-    .
-    .
     <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    .
-    .
-    .hhhhhhh
-    .
-    .
-    .
-    .
-    .
-     <section id="about-this-sample">
-        <h2>About this sample</h2>
-        <p>This is the section for "About this sample".</p>
+    <br>
+    <br>
+     <section id="about">
+        <h2>About</h2>
+        <p>This is the section for "About".</p>
     </section>
-    <section id="before-you-begin">
-        <h2>Before you begin</h2>
-        <p>This is the section for "Before you begin".</p>
+        <br>
+            <hr>
+    <section id="blocking-event">
+        <h2>Blocking Event</h2>
+        <p>This is the section for "Blocking Event".</p>
     </section>
-    <section id="run-this-sample">
-        <h2>Running the sample</h2>
-        <p>This is the section for "Running the sample".</p>
+        <br>
+            <hr>
+    <section id="deadlock-event">
+        <h2>Deadlock Event</h2>
+        <p>This is the section for "Deadlock Event".</p>
     </section>
-    <section id="sample-details">
-        <h2>Sample details</h2>
-        <p>This is the section for "Sample details".</p>
+        <br>
+            <hr>
+    <section id="create-views">
+        <h2>Create Views</h2>
+        <p>This is the section for "Create Views".</p>
     </section>
-    <section id="disclaimers">
-        <h2>Disclaimers</h2>
-        <p>This is the section for "Disclaimers".</p>
+        <br>
+            <hr>
+    <section id="conclusion">
+        <h2>Conclusion</h2>
+        <p>This is the section for "Conclusion".</p>
     </section>
-    <section id="related-links">
-        <h2>Related links</h2>
-        <p>This is the section for "Related links".</p>
-    </section>
-        <h2>Disclaimers</h2>
-        <p>This is the section for Disclaimers.</p>
-    </section>
-    <section id="related-links">
-        <h2>Related links</h2>
-        <p>This is the section for Related links.</p>
-    </section>
+        <br>
