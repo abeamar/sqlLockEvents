@@ -15,7 +15,7 @@ Showcase of my way to monitor blocking and deadlock sessions occurrence history 
      <section id="about">
         <h2>1. About</h2>
         <p>
-	I wanted to have accurate information about locks on my databases, so I did this with using the right extended events and then created a custom SELECT query to extract the information from the created file and present it in my reports.<br><br>&emsp; - Key columns for <b>deadlock sessions</b> are deadlock victim, deadlock object, sql_text and the users in process. All with clear overview.<br>&emsp; - Key columns for <b>blocking sessions</b> are blocking start and end time, duration, sql text and users in process. It's all displayed in ONE line, so it gives you a clear overview.
+	I wanted to have accurate information about locks on my databases. I did that using the right extended events and then created a custom SELECT query to extract the right information from the created file and present it in my reports.<br><br>&emsp; - Key columns for <b>deadlock sessions</b> are deadlock victim, deadlock object, sql_text and the users in process. All with clear overview.<br>&emsp; - Key columns for <b>blocking sessions</b> are blocking start and end time, duration, sql text and users in process. It's all displayed in ONE line, so it gives you a clear overview.
 	<br>Below is an overview of the information you get at the end. 
 	</p>
     </section>
