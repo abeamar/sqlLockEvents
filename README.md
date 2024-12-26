@@ -4,41 +4,41 @@ Showcase of my way to track blocking and deadlock sessions occurrence history wi
 <hr>
     </ul>
     <p dir="auto">
-        <a href="#about">About</a><br>
-        <a href="#blocking-event">Blocking Event</a><br>
-        <a href="#deadlock-event">Deadlock Event</a><br>
-        <a href="#create-views">Create Views</a><br>
-        <a href="#conclusion">Conclusion</a><br>
+        <a href="#about">1. About</a><br>
+        <a href="#blocking-event">2. Blocking Event</a><br>
+        <a href="#deadlock-event">3. Deadlock Event</a><br>
+        <a href="#create-views">4. Create Views</a><br>
+        <a href="#conclusion">5. Conclusion</a><br>
     </p>
     <hr>
     <br>
     <br>
      <section id="about">
-        <h2>About</h2>
+        <h2>1. About</h2>
         <p>This is the section for "About".</p>
     </section>
         <br>
             <hr>
     <section id="blocking-event">
-        <h2>Blocking Event</h2>
+        <h2>2. Blocking Event</h2>
         <p>This is the section for "Blocking Event".</p>
     </section>
         <br>
             <hr>
     <section id="deadlock-event">
-        <h2>Deadlock Event</h2>
+        <h2>3. Deadlock Event</h2>
         <p>This is the section for "Deadlock Event".</p>
     </section>
         <br>
             <hr>
     <section id="create-views">
-        <h2>Create Views</h2>
+        <h2>4. Create Views</h2>
         <p>This is the section for "Create Views".</p>
     </section>
         <br>
             <hr>
     <section id="conclusion">
-        <h2>Conclusion</h2>
+        <h2>5. Conclusion</h2>
         <p>This is the section for "Conclusion".</p>
     </section>
         <br>
