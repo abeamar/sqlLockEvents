@@ -23,6 +23,17 @@ Showcase of my way to track blocking and deadlock sessions occurrence history wi
         <h2>2. Blocking Event</h2>
         <p>This is the section for "Blocking Event".</p>
   <div class="copy-bar">
+ <pre><code>
+exec sp_configure 'show advanced options',1;
+GO
+RECONFIGURE;
+GO
+exec sp_configure 'blocked process threshold (s)',5;
+GO
+RECONFIGURE;
+GO
+</code></pre>
+    
   <pre><code>
 CREATE EVENT SESSION blckCapture
 ON SERVER
@@ -67,6 +78,80 @@ GO
     <section id="create-views">
         <h2>4. Create Views</h2>
         <p>This is the section for "Create Views".</p>
+ <pre><code>
+CREATE VIEW vw_blckSessions AS
+;WITH blckData AS (
+    SELECT
+        DATEADD(HOUR, 1, event_data.value('(event/@timestamp)[1]', 'DATETIME')) AS EventTime,
+        blocked_process.value('@spid', 'INT') AS BlockedSPID,
+        blocking_process.value('@spid', 'INT') AS BlockingSPID,
+        blocked_process.value('@hostname', 'NVARCHAR(256)') AS BlockedHostname,
+        blocked_process.value('@loginname', 'NVARCHAR(256)') AS BlockedLoginName,
+        blocked_process.value('(inputbuf)[1]', 'NVARCHAR(MAX)') AS BlockedSQLText,
+        blocking_process.value('@hostname', 'NVARCHAR(256)') AS BlockingHostname,
+        blocking_process.value('@loginname', 'NVARCHAR(256)') AS BlockingLoginName,
+        blocking_process.value('(inputbuf)[1]', 'NVARCHAR(MAX)') AS BlockingSQLText
+    FROM (
+        SELECT CAST(event_data AS XML) AS event_data
+        FROM sys.fn_xe_file_target_read_file('C:\UPDATE\blckSessions*.xel', NULL, NULL, NULL)) AS Data
+    	CROSS APPLY event_data.nodes('//event[@name="blocked_process_report"]/data[@name="blocked_process"]/value/blocked-process-report') AS XEventData (blocked_report)
+    	CROSS APPLY XEventData.blocked_report.nodes('blocked-process/process') AS BlockedProcessNode (blocked_process)
+   	 CROSS APPLY XEventData.blocked_report.nodes('blocking-process/process') AS BlockingProcessNode (blocking_process))
+	,blckData2 AS (SELECT
+                    CONVERT(VARCHAR(19), MIN(EventTime), 120) AS Eventime_start,
+                    CONVERT(VARCHAR(19), MAX(EventTime), 120) AS Eventime_last,
+                    DATEDIFF(SECOND, MAX(EventTime), MIN(EventTime)) as Duration,
+                    BlockingSPID,
+   		    BlockingHostname,
+  		    BlockingLoginName,
+ 		    BlockingSQLText,
+   		    BlockedSPID,
+    		    BlockedHostname,
+    		    BlockedLoginName,
+    		    BlockedSQLText
+		    FROM blckData
+			GROUP BY BlockedSPID, BlockedHostname, BlockedLoginName, BlockedSQLText, BlockingSPID, BlockingHostname, BlockingLoginName, BlockingSQLText)
+	SELECT
+                    Eventime_start
+                    ,Eventime_last
+                    ,ABS(Duration) AS Duration
+                    ,BlockingSPID
+                    ,BlockedSPID
+    		    ,BlockingHostname
+    		    ,BlockingLoginName
+    		    ,BlockingSQLText
+    		    ,BlockedHostname
+    		    ,BlockedLoginName
+   		    ,BlockedSQLText
+	FROM blckData2 ORDER BY Eventime_last DESC;
+</code></pre>       
+  <pre><code>
+CREATE VIEW vw_dlckSessions AS
+    SELECT
+    event_data.value('(event/@timestamp)[1]', 'DATETIME') AS DeadlockStartTime,
+    deadlock_node.value('@hostname', 'NVARCHAR(256)') AS Hostname,
+    deadlock_node.value('@loginname', 'NVARCHAR(256)') AS LoginName,
+    deadlock_node.value('@spid', 'INT') AS SPID,
+    deadlock_node.value('(inputbuf)[1]', 'NVARCHAR(MAX)') AS SQLText,
+    resource_node.value('@objectname', 'NVARCHAR(256)') AS ObjectName,
+    CASE
+        WHEN deadlock_node.value('@id', 'NVARCHAR(256)') = victim_node.value('@id', 'NVARCHAR(256)')
+        THEN 1
+        ELSE 0
+    END AS Victim,
+    CASE
+        WHEN deadlock_node.value('@id', 'NVARCHAR(256)') = victim_node.value('@id', 'NVARCHAR(256)')
+        THEN 'Yes'
+        ELSE 'No'
+    END AS Evicted
+    FROM (
+    SELECT CAST(event_data AS XML) AS event_data
+    FROM sys.fn_xe_file_target_read_file('C:\dlckSessions*.xel', NULL, NULL, NULL)) AS Data
+CROSS APPLY Data.event_data.nodes('//event[@name="xml_deadlock_report"]/data[@name="xml_report"]/value/deadlock/process-list/process') AS ProcessNode (deadlock_node)
+CROSS APPLY Data.event_data.nodes('//event[@name="xml_deadlock_report"]/data[@name="xml_report"]/value/deadlock/resource-list/keylock') AS ResourceNode (resource_node)
+CROSS APPLY Data.event_data.nodes('//event[@name="xml_deadlock_report"]/data[@name="xml_report"]/value/deadlock/victim-list/victimProcess') AS VictimNode (victim_node)
+ORDER BY DeadlockStartTime DESC;
+</code></pre>
     </section>
         <br>
             <hr>
