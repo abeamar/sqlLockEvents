@@ -1,6 +1,6 @@
 
 # Block and Deadlock monitor <img src="https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/UHFbanner-MSlogo?fmt=png-alpha&bfc=off&qlt=100,1" align="right" width="150">
-Showcase of my way to track blocking and deadlock sessions occurrence history with all the information needed to be analysed, using views and extended events. Created for MS SQL.  
+Showcase of my way to monitor blocking and deadlock sessions occurrence history with all the information needed to be analysed, using views and extended events. Created for MS SQL.  
 <hr>
     </ul>
     <p dir="auto">
@@ -15,14 +15,13 @@ Showcase of my way to track blocking and deadlock sessions occurrence history wi
     <br>
      <section id="about">
         <h2>1. About</h2>
-        <p>This is the section for "About".</p>
+        <p>I wanted to have accurate information about locks on my databases, so I did this with using the right extended events and then created a custom SELECT query to extract the information from the created file and present it in my reports.<br>Below is an overview of the information you get at the end. <br>1. Key columns for <b>deadlock sessions</b> are deadlock victim, deadlock object, sql_text and the users in process. All with clear overview.<br>2. Key columns for <b>blocking sessions</b> are blocking start and end time, duration, sql text and users in process. It's all displayed in ONE line, so it gives you a clear overview.</p>
     </section>
         <br>
             <hr>
     <section id="blocking-event">
         <h2>2. Blocking Event</h2>
         <p>This is the section for "Blocking Event".</p>
-  <div class="copy-bar">
  <pre><code>
 exec sp_configure 'show advanced options',1;
 GO
@@ -59,7 +58,6 @@ GO
         <h2>3. Deadlock Event</h2>
         <p>This is the section for "Deadlock Event".</p>
 
-<div class="copy-bar">
   <pre><code>
 CREATE EVENT SESSION deadlckCapture
 ON SERVER
