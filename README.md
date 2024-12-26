@@ -15,13 +15,16 @@ Showcase of my way to monitor blocking and deadlock sessions occurrence history 
     <br>
      <section id="about">
         <h2>1. About</h2>
-        <p>I wanted to have accurate information about locks on my databases, so I did this with using the right extended events and then created a custom SELECT query to extract the information from the created file and present it in my reports.<br>Below is an overview of the information you get at the end. <br>1. Key columns for <b>deadlock sessions</b> are deadlock victim, deadlock object, sql_text and the users in process. All with clear overview.<br>2. Key columns for <b>blocking sessions</b> are blocking start and end time, duration, sql text and users in process. It's all displayed in ONE line, so it gives you a clear overview.</p>
+        <p>
+	I wanted to have accurate information about locks on my databases, so I did this with using the right extended events and then created a custom SELECT query to extract the information from the created file and present it in my reports.<br><br>1. Key columns for <b>deadlock sessions</b> are deadlock victim, deadlock object, sql_text and the users in process. All with clear overview.<br>2. Key columns for <b>blocking sessions</b> are blocking start and end time, duration, sql text and users in process. It's all displayed in ONE line, so it gives you a clear overview.
+	<br>Below is an overview of the information you get at the end. 
+	</p>
     </section>
         <br>
             <hr>
     <section id="blocking-event">
         <h2>2. Blocking Event</h2>
-        <p>This is the section for "Blocking Event".</p>
+        <p>First we need to enable blocked process treshold and then create Extended Event. Treshold min value is 5 sec to check for blocks.</p>
  <pre><code>
 exec sp_configure 'show advanced options',1;
 GO
@@ -75,7 +78,7 @@ GO
             <hr>
     <section id="create-views">
         <h2>4. Create Views</h2>
-        <p>This is the section for "Create Views".</p>
+        <p>Last step is to create Views in database of your choice. And after that you can create your reports.<br></p>
  <pre><code>
 CREATE VIEW vw_blckSessions AS
 ;WITH blckData AS (
