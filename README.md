@@ -22,12 +22,45 @@ Showcase of my way to track blocking and deadlock sessions occurrence history wi
     <section id="blocking-event">
         <h2>2. Blocking Event</h2>
         <p>This is the section for "Blocking Event".</p>
+  <div class="copy-bar">
+  <pre><code>
+CREATE EVENT SESSION blckCapture
+ON SERVER
+ADD EVENT sqlserver.blocked_process_report(
+    ACTION (
+        sqlserver.sql_text,
+        sqlserver.session_id,
+        sqlserver.username,
+        sqlserver.client_hostname
+    ))
+ADD TARGET package0.event_file(SET filename=N'C:\blckSessions.xel',max_file_size=(100),max_rollover_files=(5))
+WITH (MAX_MEMORY=4096 kB,EVENT_RETENTION_MODE=ALLOW_SINGLE_EVENT_LOSS,MAX_DISPATCH_LATENCY=36000 SECONDS,MAX_EVENT_SIZE=0 KB,MEMORY_PARTITION_MODE=NONE,TRACK_CAUSALITY=OFF,STARTUP_STATE=ON)
+GO
+ALTER EVENT SESSION blckCapture ON SERVER STATE = START;
+ALTER EVENT SESSION blckCapture ON SERVER WITH (STARTUP_STATE=ON);
+GO
+</code></pre>
+</div> 
     </section>
         <br>
             <hr>
     <section id="deadlock-event">
         <h2>3. Deadlock Event</h2>
         <p>This is the section for "Deadlock Event".</p>
+
+<div class="copy-bar">
+  <pre><code>
+CREATE EVENT SESSION deadlckCapture
+ON SERVER
+ADD EVENT sqlserver.xml_deadlock_report
+ADD TARGET package0.event_file(SET filename=N'C:\dlckSessions.xel',max_file_size=(10),max_rollover_files=(5))
+WITH (MAX_MEMORY=4096 KB,EVENT_RETENTION_MODE=ALLOW_SINGLE_EVENT_LOSS,MAX_DISPATCH_LATENCY=30 SECONDS,MAX_EVENT_SIZE=0 KB,MEMORY_PARTITION_MODE=NONE,TRACK_CAUSALITY=OFF,STARTUP_STATE=ON)
+GO
+ALTER EVENT SESSION deadlckCapture ON SERVER STATE = START;
+ALTER EVENT SESSION deadlckCapture ON SERVER WITH (STARTUP_STATE=ON);
+GO
+</code></pre>
+</div>   
     </section>
         <br>
             <hr>
