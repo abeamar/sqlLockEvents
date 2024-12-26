@@ -12,11 +12,10 @@ Showcase of my way to monitor blocking and deadlock sessions occurrence history 
     </p>
     <hr>
     <br>
-    <br>
      <section id="about">
         <h2>1. About</h2>
         <p>
-	I wanted to have accurate information about locks on my databases, so I did this with using the right extended events and then created a custom SELECT query to extract the information from the created file and present it in my reports.<br><br>1. Key columns for <b>deadlock sessions</b> are deadlock victim, deadlock object, sql_text and the users in process. All with clear overview.<br>2. Key columns for <b>blocking sessions</b> are blocking start and end time, duration, sql text and users in process. It's all displayed in ONE line, so it gives you a clear overview.
+	I wanted to have accurate information about locks on my databases, so I did this with using the right extended events and then created a custom SELECT query to extract the information from the created file and present it in my reports.<br><br>&emsp; - Key columns for <b>deadlock sessions</b> are deadlock victim, deadlock object, sql_text and the users in process. All with clear overview.<br>&emsp; - Key columns for <b>blocking sessions</b> are blocking start and end time, duration, sql text and users in process. It's all displayed in ONE line, so it gives you a clear overview.
 	<br>Below is an overview of the information you get at the end. 
 	</p>
     </section>
@@ -59,7 +58,7 @@ GO
             <hr>
     <section id="deadlock-event">
         <h2>3. Deadlock Event</h2>
-        <p>This is the section for "Deadlock Event".</p>
+        <p>Create one more Extended Event for deadlocks, with target as a filename.</p>
 
   <pre><code>
 CREATE EVENT SESSION deadlckCapture
@@ -97,7 +96,7 @@ CREATE VIEW vw_blckSessions AS
         FROM sys.fn_xe_file_target_read_file('C:\UPDATE\blckSessions*.xel', NULL, NULL, NULL)) AS Data
     	CROSS APPLY event_data.nodes('//event[@name="blocked_process_report"]/data[@name="blocked_process"]/value/blocked-process-report') AS XEventData (blocked_report)
     	CROSS APPLY XEventData.blocked_report.nodes('blocked-process/process') AS BlockedProcessNode (blocked_process)
-   	 CROSS APPLY XEventData.blocked_report.nodes('blocking-process/process') AS BlockingProcessNode (blocking_process))
+   	CROSS APPLY XEventData.blocked_report.nodes('blocking-process/process') AS BlockingProcessNode (blocking_process))
 	,blckData2 AS (SELECT
                     CONVERT(VARCHAR(19), MIN(EventTime), 120) AS Eventime_start,
                     CONVERT(VARCHAR(19), MAX(EventTime), 120) AS Eventime_last,
@@ -158,6 +157,9 @@ ORDER BY DeadlockStartTime DESC;
             <hr>
     <section id="conclusion">
         <h2>5. Conclusion</h2>
-        <p>This is the section for "Conclusion".</p>
+        <p>With these two views <br>
+&emsp;vw_blckSessions <br>
+&emsp;vw_dlckSessions <br>
+Now you can monitor SPIDs on your sql instance with all the necessary information to debug.</p>
     </section>
         <br>
