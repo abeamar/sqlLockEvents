@@ -163,3 +163,8 @@ ORDER BY DeadlockStartTime DESC;
 Now you can monitor SPIDs on your sql instance with all the necessary information to debug.</p>
     </section>
         <br>
+
+
+ <pre><code>
+AMAR
+</code></pre>
